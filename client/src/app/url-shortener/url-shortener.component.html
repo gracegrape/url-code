@@ -1,0 +1,28 @@
+<div class="overallDiv">
+  <div class="headerGreeting">
+    <h1>Welcome to URL Shortener!</h1>
+  </div>
+
+  <form class="urlShortenerForm">
+    <mat-form-field class="urlShortenerInputField" appearance="outline">
+      <mat-label>Link to Shorten</mat-label>
+      <input
+        matInput
+        placeholder="Enter your loooooooooooong link..."
+        [(ngModel)]="originalUrl"
+        name="originalUrl"
+      />
+    </mat-form-field>
+  </form>
+
+  <form class="shortenedOutputForm">
+    <mat-form-field class="shortenedOutputField" appearance="outline">
+      <mat-label>Shortened Link</mat-label>
+      <input matInput readonly [(ngModel)]="shortenedUrl" name="shortenedUrl" />
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button color="primary" (click)="submitUrl(originalUrl)">
+    Shorten!
+  </button>
+</div>

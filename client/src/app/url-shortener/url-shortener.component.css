@@ -1,0 +1,33 @@
+.overallDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerGreeting {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.urlInputDiv {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.urlShortenerForm,
+.shortenedOutputForm {
+  min-width: 800px;
+  max-width: 80%;
+  width: 100%;
+}
+
+.urlShortenerInputField,
+.shortenedOutputField {
+  width: 100%;
+}
