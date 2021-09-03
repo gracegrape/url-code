@@ -6,14 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gracegrape/url-code.git"
-  },
   "author": "Grace",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gracegrape/url-code/issues"
   },
-  "homepage": "https://github.com/gracegrape/url-code#readme"
+  "homepage": "https://github.com/gracegrape/url-code#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
