@@ -45,7 +45,7 @@ app.post("/urlShorten", (req, res) => {
   const originalUrl = req.body.url;
 
   if (validUrl.isUri(originalUrl)) {
-    var shortenedUrl = localUrl + "/" + nanoid();
+    var shortenedUrl = localUrl + "/" + nanoid(10);
 
     // insert into database
     client.query(
