@@ -16,9 +16,9 @@ client.connect(); // connect to psql
 router.get("/getUrlDatas", (req, res) => {
   client.query("SELECT * FROM public.url_table", (err, dbResult) => {
     if (err) {
-      res.send(err);
+      return res.send({ error: err });
     } else {
-      res.send(dbResult.rows);
+      return res.send(dbResult.rows);
     }
     client.end;
   });
@@ -36,7 +36,6 @@ router.post("/urlShorten", (req, res) => {
     */
 
   const originalUrl = req.body.url;
-
   if (validUrl.isUri(originalUrl)) {
     var shortenedUrl = localUrl + "/" + nanoid(10);
 
@@ -45,33 +44,59 @@ router.post("/urlShorten", (req, res) => {
       `insert into public.url_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
       (err, dbResult) => {
         if (err) {
-          // check if key is already in the table
+          // check if originalUrl key is already in the table
           client.query(
             `select shortUrl from public.url_table where (originalUrl = '${originalUrl}');`,
             (pkErr, pkRes) => {
               if (pkErr) {
-                res.send({
+                return res.send({
                   error: pkErr,
                 });
               } else {
                 if (pkRes.rows.length == 1) {
                   shortenedUrl = pkRes.rows[0];
 
-                  res.send({
+                  return res.send({
                     originalUrl: originalUrl,
                     shortenedUrl: shortenedUrl.shorturl,
                   });
                 } else {
-                  // original URL does not exist -> error might be due to shortenedUrl
+                  // original URL does not exist -> error might be due to shortenedUrl -> collision
+                  var foundUnique = false;
+                  var maxLoops = 0; // only allow 5 loops to prevent infinite looping
+
+                  while (foundUnique && maxLoops < 5) {
+                    maxLoops++;
+                    shortenedUrl = localUrl + "/" + nanoid(10); //generate new
+
+                    client.query(
+                      `insert into public.url_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
+                      (loopErr, newRes) => {
+                        if (!loopErr) {
+                          foundUnique = true;
+                          return res.send({
+                            originalUrl: originalUrl,
+                            shortenedUrl: shortenedUrl,
+                          });
+                        }
+                      }
+                    );
+
+                    client.end;
+                  }
+
+                  if (!foundUnique) {
+                    return res.send({
+                      error:
+                        "Error inserting to database. Please try again later.",
+                    });
+                  }
                 }
               }
             }
           );
         } else {
-          console.log("Url added");
-
-          // send results
-          res.send({
+          return res.send({
             originalUrl: originalUrl,
             shortenedUrl: shortenedUrl,
           });
@@ -80,7 +105,7 @@ router.post("/urlShorten", (req, res) => {
       }
     );
   } else {
-    res.send({ error: "url is not valid: " + originalUrl });
+    return res.send({ error: "url is not valid: " + originalUrl });
   }
 });
 
@@ -92,9 +117,8 @@ router.get("/:key", (req, res) => {
     `select originalUrl from public.url_table where (shortUrl = '${shortenedUrl}');`,
     (err, dbResult) => {
       if (err) {
-        console.log(err);
+        res.send({ error: err });
       } else {
-        console.log(dbResult.rows);
         if (dbResult.rows.length == 0) {
           res.send({ error: "url is not valid: " + shortenedUrl });
         } else {
