@@ -17,7 +17,6 @@ export class UrlShortenerComponent implements OnInit {
 
   submitUrl(submittedUrl: string) {
     console.log(submittedUrl);
-    this.shortenedUrl = submittedUrl;
 
     this.apiShortenService.getShortenedLink(submittedUrl).subscribe((data) => {
       console.log(data);
