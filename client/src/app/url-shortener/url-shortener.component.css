@@ -1,3 +1,10 @@
+.verticalDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+}
+
 .overallDiv {
   display: flex;
   flex-direction: column;
@@ -5,7 +12,7 @@
 }
 
 .headerGreeting {
-  margin: 20px;
+  margin: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,11 +30,45 @@
 .urlShortenerForm,
 .shortenedOutputForm {
   min-width: 800px;
-  max-width: 80%;
+  max-width: 70%;
   width: 100%;
 }
 
 .urlShortenerInputField,
 .shortenedOutputField {
   width: 100%;
+}
+
+.inputIconDiv {
+  display: flex;
+  align-items: center;
+}
+
+.copyIcon:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.linkIconOriginalLinkDiv {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black !important;
+}
+
+.errorHint {
+  color: red;
+}
+
+.urlShortener {
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.webpageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

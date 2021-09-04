@@ -1,4 +1,5 @@
 export interface dbObj {
-  originalUrl: string;
-  shortenedUrl: string;
+  error?: string;
+  originalUrl?: string;
+  shortenedUrl?: string;
 }
