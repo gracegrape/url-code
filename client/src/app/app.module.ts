@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent, UrlShortenerComponent],
@@ -26,6 +28,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     FormsModule,
+    ClipboardModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

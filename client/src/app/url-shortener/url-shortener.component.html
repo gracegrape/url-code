@@ -1,28 +1,51 @@
-<div class="overallDiv">
-  <div class="headerGreeting">
-    <h1>Welcome to URL Shortener!</h1>
+<div class="verticalDiv">
+  <div class="overallDiv">
+    <div class="headerGreeting">
+      <h1>Welcome to</h1>
+      <h1 class="urlShortener">URL Shortener</h1>
+      <h4>
+        Just paste your loooooooooooong link and click the button, as easy as
+        that!
+      </h4>
+    </div>
+
+    <form class="urlShortenerForm">
+      <mat-form-field class="urlShortenerInputField" appearance="outline">
+        <mat-label>Link to Shorten</mat-label>
+        <input
+          matInput
+          placeholder="Enter your loooooooooooong link..."
+          [(ngModel)]="originalUrl"
+          name="originalUrl"
+        />
+        <mat-hint class="errorHint" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </mat-hint>
+      </mat-form-field>
+    </form>
+
+    <form *ngIf="shortenedUrl" class="shortenedOutputForm">
+      <mat-form-field class="shortenedOutputField" appearance="fill">
+        <mat-label>Shortened Link</mat-label>
+        <div class="inputIconDiv">
+          <input
+            matInput
+            readonly
+            [(ngModel)]="shortenedUrl"
+            name="shortenedUrl"
+          />
+          <mat-icon
+            class="copyIcon"
+            [cdkCopyToClipboard]="shortenedUrl"
+            (click)="openSnackBar()"
+          >
+            file_copy
+          </mat-icon>
+        </div>
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="submitUrl(originalUrl)">
+      Shorten!
+    </button>
   </div>
-
-  <form class="urlShortenerForm">
-    <mat-form-field class="urlShortenerInputField" appearance="outline">
-      <mat-label>Link to Shorten</mat-label>
-      <input
-        matInput
-        placeholder="Enter your loooooooooooong link..."
-        [(ngModel)]="originalUrl"
-        name="originalUrl"
-      />
-    </mat-form-field>
-  </form>
-
-  <form class="shortenedOutputForm">
-    <mat-form-field class="shortenedOutputField" appearance="outline">
-      <mat-label>Shortened Link</mat-label>
-      <input matInput readonly [(ngModel)]="shortenedUrl" name="shortenedUrl" />
-    </mat-form-field>
-  </form>
-
-  <button mat-raised-button color="primary" (click)="submitUrl(originalUrl)">
-    Shorten!
-  </button>
 </div>

@@ -29,10 +29,8 @@ export class ApiShortenService {
 
     return this.http.post<dbObj>(apiUrl, urlToSend).pipe(
       catchError((error) => {
-        console.log(error);
         const errorDB: dbObj = {
-          originalUrl: '',
-          shortenedUrl: '',
+          error: error,
         };
 
         return of(errorDB);
