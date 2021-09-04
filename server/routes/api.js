@@ -27,7 +27,7 @@ router.get("/getUrlDatas", (req, res) => {
 /**
  * Received a url, generates a shortened url, store in db and return this shortenerd url
  */
-router.post("/urlShorten", async (req, res) => {
+router.post("/urlShorten", (req, res) => {
   /*
     expects data in json format:
     {
@@ -54,13 +54,16 @@ router.post("/urlShorten", async (req, res) => {
                   error: pkErr,
                 });
               } else {
-                // found
-                shortenedUrl = pkRes.rows[0];
+                if (pkRes.rows.length == 1) {
+                  shortenedUrl = pkRes.rows[0];
 
-                res.send({
-                  originalUrl: originalUrl,
-                  shortenedUrl: shortenedUrl.shorturl,
-                });
+                  res.send({
+                    originalUrl: originalUrl,
+                    shortenedUrl: shortenedUrl.shorturl,
+                  });
+                } else {
+                  // original URL does not exist -> error might be due to shortenedUrl
+                }
               }
             }
           );
@@ -81,7 +84,7 @@ router.post("/urlShorten", async (req, res) => {
   }
 });
 
-router.get("/:key", async (req, res) => {
+router.get("/:key", (req, res) => {
   shortenedUrlKey = req.params.key;
   shortenedUrl = localUrl + "/" + shortenedUrlKey;
 
