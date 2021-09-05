@@ -29,6 +29,9 @@ app.use(function (req, res, next) {
 routes = require("./routes/api");
 app.use("/", routes);
 
-app.listen(3001, function () {
-  console.log("Listening on Port 3001");
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, function () {
+  console.log(`Listening on Port ${PORT}!`);
 });
+
+module.exports = app;

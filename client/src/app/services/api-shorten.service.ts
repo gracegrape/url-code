@@ -29,11 +29,18 @@ export class ApiShortenService {
 
     return this.http.post<dbObj>(apiUrl, urlToSend).pipe(
       catchError((error) => {
-        const errorDB: dbObj = {
-          error: error,
-        };
-
-        return of(errorDB);
+        console.log(error);
+        if (error.status == 0) {
+          const errorDB: dbObj = {
+            error: 'The server seems to be down... Try again later?',
+          };
+          return of(errorDB);
+        } else {
+          const errorDB: dbObj = {
+            error: error.error.message,
+          };
+          return of(errorDB);
+        }
       })
     );
   }

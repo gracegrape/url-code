@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiShortenService } from '../services/api-shorten.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-url-shortener',

@@ -16,9 +16,9 @@ client.connect(); // connect to psql
 router.get("/getUrlDatas", (req, res) => {
   client.query("SELECT * FROM public.url_table", (err, dbResult) => {
     if (err) {
-      return res.send({ error: err });
+      return res.status(400).send({ error: err });
     } else {
-      return res.send(dbResult.rows);
+      return res.status(200).send(dbResult.rows);
     }
     client.end;
   });
@@ -49,8 +49,9 @@ router.post("/urlShorten", (req, res) => {
             `select shortUrl from public.url_table where (originalUrl = '${originalUrl}');`,
             (pkErr, pkRes) => {
               if (pkErr) {
-                return res.send({
+                return res.status(400).send({
                   error: pkErr,
+                  message: "An error encountered.",
                 });
               } else {
                 if (pkRes.rows.length == 1) {
@@ -86,8 +87,9 @@ router.post("/urlShorten", (req, res) => {
                   }
 
                   if (!foundUnique) {
-                    return res.send({
-                      error:
+                    return res.status(400).send({
+                      error: "Error",
+                      message:
                         "Error inserting to database. Please try again later.",
                     });
                   }
@@ -105,7 +107,10 @@ router.post("/urlShorten", (req, res) => {
       }
     );
   } else {
-    return res.send({ error: "url is not valid: " + originalUrl });
+    return res.status(400).send({
+      error: "URL is not valid.",
+      message: "URL is not valid: " + originalUrl,
+    });
   }
 });
 
@@ -117,10 +122,10 @@ router.get("/:key", (req, res) => {
     `select originalUrl from public.url_table where (shortUrl = '${shortenedUrl}');`,
     (err, dbResult) => {
       if (err) {
-        res.send({ error: err });
+        res.status(400).send({ error: err });
       } else {
         if (dbResult.rows.length == 0) {
-          res.send({ error: "url is not valid: " + shortenedUrl });
+          res.status(400).send({ error: "URL is not valid: " + shortenedUrl });
         } else {
           res.redirect(dbResult.rows[0].originalurl);
         }
