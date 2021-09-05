@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit"
   },
   "author": "Grace",
   "license": "ISC",
@@ -13,9 +13,13 @@
   },
   "homepage": "https://github.com/gracegrape/url-code#readme",
   "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "express": "^4.17.1",
+    "mocha": "^9.1.1",
     "nanoid": "^3.1.25",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
