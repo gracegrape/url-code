@@ -18,10 +18,12 @@ export class UrlShortenerComponent implements OnInit {
 
   originalUrl: string = '';
   shortenedUrl: string = '';
-
   errorMessage = '';
 
+  isLoading = false;
+
   submitUrl(submittedUrl: string) {
+    this.isLoading = true;
     console.log(submittedUrl);
 
     this.apiShortenService.getShortenedLink(submittedUrl).subscribe((data) => {
@@ -33,6 +35,7 @@ export class UrlShortenerComponent implements OnInit {
         this.shortenedUrl = data.shortenedUrl!;
         this.errorMessage = '';
       }
+      this.isLoading = false;
     });
   }
 
