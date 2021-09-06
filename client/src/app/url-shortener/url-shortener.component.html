@@ -9,6 +9,10 @@
       </h4>
     </div>
 
+    <div class="spinnerDiv" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+
     <form class="urlShortenerForm">
       <mat-form-field class="urlShortenerInputField" appearance="outline">
         <mat-label>Link to Shorten</mat-label>

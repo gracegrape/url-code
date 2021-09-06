@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .urlInputDiv {
@@ -29,8 +30,9 @@
 
 .urlShortenerForm,
 .shortenedOutputForm {
-  min-width: 800px;
-  max-width: 70%;
+  /* min-width: 800px; */
+  /* max-width: 70%; */
+
   width: 100%;
 }
 
@@ -71,4 +73,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.spinnerDiv {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
 }
