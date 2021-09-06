@@ -7,7 +7,9 @@ const validUrl = require("valid-url");
 const localUrl = "http://localhost:3001";
 
 // db connection
-const client = require("../database/connection");
+const pg = require("pg");
+const dbConns = require("../database/connection");
+const client = new pg.Client(dbConns.development.connection);
 client.connect(); // connect to psql
 
 /**

@@ -1,23 +1,30 @@
-const { Client } = require("pg");
+require("dotenv").config();
+const pg = require("pg");
 
-const client = new Client({
-  host: "localhost",
-  user: "postgres",
-  port: "5432",
-  password: "postgres",
-  database: "url_shortener",
-});
+if (process.env.DATABASE_URL) {
+  pg.defaults.ssl = { rejectUnauthorized: false };
+}
 
-// client.connect();
-
-// client.query("SELECT * FROM public.url_table", (err, res) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log(res.rows);
-//   }
-
-//   client.end;
+// const client = new pg.Client({
+//   host: "localhost",
+//   user: "postgres",
+//   password: "postgres",
+//   database: "url_shortener",
 // });
 
-module.exports = client;
+const dbConns = {
+  development: {
+    connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+    },
+  },
+  production: {
+    connection: process.env.DATABASE_URL,
+    pool: { min: 2, max: 10 },
+  },
+};
+
+module.exports = dbConns;

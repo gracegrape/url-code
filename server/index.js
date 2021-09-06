@@ -1,10 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 app.use(express.json()); //receive info in json format
 
 app.use(function (req, res, next) {
-  // allow access from angular local host
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   res.setHeader(
     "Access-Control-Allow-Methods",
