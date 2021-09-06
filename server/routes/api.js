@@ -142,4 +142,23 @@ router.get("/:key", (req, res) => {
   );
 });
 
+router.delete("/delete/:key", (req, res) => {
+  shortenedUrlKey = req.params.key;
+  shortenedUrl = localUrl + "/" + shortenedUrlKey;
+  console.log(shortenedUrl);
+
+  client.query(
+    `delete from public.urls_table where shortUrl = '${shortenedUrl}';`,
+    (err, dbResult) => {
+      if (err) {
+        res.status(400).send({ error: err });
+      } else {
+        res.status(200).send({ success: "Deleted." });
+      }
+
+      client.end;
+    }
+  );
+});
+
 module.exports = router;
