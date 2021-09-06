@@ -4,7 +4,7 @@ const router = express.Router();
 // shorten link
 const { nanoid } = require("nanoid");
 const validUrl = require("valid-url");
-const localUrl = "http://localhost:3001";
+const localUrl = process.env.ROOT_URL || "http://localhost:3001";
 
 // db connection
 const pg = require("pg");
@@ -135,6 +135,25 @@ router.get("/:key", (req, res) => {
         } else {
           res.redirect(dbResult.rows[0].originalurl);
         }
+      }
+
+      client.end;
+    }
+  );
+});
+
+router.delete("/delete/:key", (req, res) => {
+  shortenedUrlKey = req.params.key;
+  shortenedUrl = localUrl + "/" + shortenedUrlKey;
+  console.log(shortenedUrl);
+
+  client.query(
+    `delete from public.urls_table where shortUrl = '${shortenedUrl}';`,
+    (err, dbResult) => {
+      if (err) {
+        res.status(400).send({ error: err });
+      } else {
+        res.status(200).send({ success: "Deleted." });
       }
 
       client.end;
