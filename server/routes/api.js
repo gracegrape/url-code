@@ -12,6 +12,10 @@ const conn = require("../database/dbConfig");
 const client = new pg.Client(conn.connection);
 client.connect(); // connect to psql
 
+router.get("/", (req, res) => {
+  return res.send("Welcome to URL Shortener!");
+});
+
 /**
  * Get back an array of all url&shortened_url
  */
