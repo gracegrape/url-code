@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
  * Get back an array of all url&shortened_url
  */
 router.get("/getUrlDatas", (req, res) => {
-  client.query("SELECT * FROM public.url_table", (err, dbResult) => {
+  client.query("SELECT * FROM public.urls_table", (err, dbResult) => {
     if (err) {
       return res.status(400).send({ error: err });
     } else {
@@ -47,12 +47,12 @@ router.post("/urlShorten", (req, res) => {
 
     // insert into database
     client.query(
-      `insert into public.url_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
+      `insert into public.urls_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
       (err, dbResult) => {
         if (err) {
           // check if originalUrl key is already in the table
           client.query(
-            `select shortUrl from public.url_table where (originalUrl = '${originalUrl}');`,
+            `select shortUrl from public.urls_table where (originalUrl = '${originalUrl}');`,
             (pkErr, pkRes) => {
               if (pkErr) {
                 return res.status(400).send({
@@ -77,7 +77,7 @@ router.post("/urlShorten", (req, res) => {
                     shortenedUrl = localUrl + "/" + nanoid(10); //generate new
 
                     client.query(
-                      `insert into public.url_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
+                      `insert into public.urls_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
                       (loopErr, newRes) => {
                         if (!loopErr) {
                           foundUnique = true;
@@ -125,7 +125,7 @@ router.get("/:key", (req, res) => {
   shortenedUrl = localUrl + "/" + shortenedUrlKey;
 
   client.query(
-    `select originalUrl from public.url_table where (shortUrl = '${shortenedUrl}');`,
+    `select originalUrl from public.urls_table where (shortUrl = '${shortenedUrl}');`,
     (err, dbResult) => {
       if (err) {
         res.status(400).send({ error: err });
