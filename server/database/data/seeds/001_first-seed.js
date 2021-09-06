@@ -1,12 +1,12 @@
 const urls_table = [
   {
-    originalUrl: "https://github.com/",
-    shortUrl: "http://localhost:3001/U3KIIILpxY",
+    originalurl: "https://github.com/",
+    shorturl: "http://localhost:3001/U3KIIILpxY",
   },
   {
-    originalUrl:
+    originalurl:
       "https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-these-few-things-e5aaac451942",
-    shortUrl: "http://localhost:3001/-mkTFHpJBW",
+    shorturl: "http://localhost:3001/-mkTFHpJBW",
   },
 ];
 

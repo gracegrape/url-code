@@ -1,7 +1,7 @@
 exports.up = (knex) => {
   return knex.schema.createTable("urls_table", function (table) {
-    table.string("originalUrl").notNullable().primary();
-    table.string("shortUrl").notNullable().unique();
+    table.string("originalurl").notNullable().primary();
+    table.string("shorturl").notNullable().unique();
   });
 };
 
