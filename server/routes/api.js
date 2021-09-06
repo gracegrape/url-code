@@ -8,8 +8,8 @@ const localUrl = "http://localhost:3001";
 
 // db connection
 const pg = require("pg");
-const dbConns = require("../database/connection");
-const client = new pg.Client(dbConns.development.connection);
+const conn = require("../database/dbConfig");
+const client = new pg.Client(conn.connection);
 client.connect(); // connect to psql
 
 /**
