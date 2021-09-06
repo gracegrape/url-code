@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { dbObj } from '../interfaces/databaseObj';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,10 @@ import { dbObj } from '../interfaces/databaseObj';
 export class ApiShortenService {
   constructor(private http: HttpClient) {}
 
+  private API_URL = environment.API_URL;
+
   getAllFromDB() {
-    let apiUrl = 'http://localhost:3001/getUrlDatas';
+    let apiUrl = this.API_URL + '/getUrlDatas';
     return this.http.get(apiUrl).pipe(
       catchError((error) => {
         console.log(error);
@@ -21,7 +24,7 @@ export class ApiShortenService {
   }
 
   getShortenedLink(originalUrl: string) {
-    let apiUrl = 'http://localhost:3001/urlShorten';
+    let apiUrl = this.API_URL + '/urlShorten';
 
     const urlToSend = {
       url: originalUrl,
