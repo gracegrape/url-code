@@ -4,13 +4,6 @@ if (process.env.DATABASE_URL) {
   pg.defaults.ssl = { rejectUnauthorized: false };
 }
 
-// const client = new pg.Client({
-//   host: "localhost",
-//   user: "postgres",
-//   password: "postgres",
-//   database: "url_shortener",
-// });
-
 const dbConns = {
   development: {
     connection: {
