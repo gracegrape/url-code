@@ -4,7 +4,7 @@ const router = express.Router();
 // shorten link
 const { nanoid } = require("nanoid");
 const validUrl = require("valid-url");
-const localUrl = "http://localhost:3001";
+const localUrl = process.env.ROOT_URL || "http://localhost:3001";
 
 // db connection
 const pg = require("pg");
