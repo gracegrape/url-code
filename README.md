@@ -9,8 +9,8 @@
 - NodeJs
 
 ## To clone and run
-- First, create a directory you want the app to be in, and git clone.
-- 
+- Create a directory you want the app to be in, and git clone.
+
 ### Server 
 From the root directory, to run the server on port 3001:
 * ```cd server```
