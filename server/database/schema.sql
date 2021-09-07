@@ -1,3 +1,6 @@
+-- access postgres:
+-- psql -U postgres url_shortener
+
 -- CREATE DATABASE url_shortener;
 
 -- CREATE TABLE url_table(

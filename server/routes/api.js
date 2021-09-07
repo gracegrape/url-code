@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 /**
- * Get back an array of all url&shortened_url
+ * Get back an array of all url & shortened_url
  */
 router.get("/getUrlDatas", (req, res) => {
   client.query("SELECT * FROM public.urls_table", (err, dbResult) => {
@@ -49,7 +49,12 @@ router.post("/urlShorten", (req, res) => {
     client.query(
       `insert into public.urls_table(originalUrl, shortUrl) values('${originalUrl}', '${shortenedUrl}');`,
       (err, dbResult) => {
-        if (err) {
+        if (!err) {
+          return res.send({
+            originalUrl: originalUrl,
+            shortenedUrl: shortenedUrl,
+          });
+        } else {
           // check if originalUrl key is already in the table
           client.query(
             `select shortUrl from public.urls_table where (originalUrl = '${originalUrl}');`,
@@ -61,6 +66,7 @@ router.post("/urlShorten", (req, res) => {
                 });
               } else {
                 if (pkRes.rows.length == 1) {
+                  // retrieve available shortened URL
                   shortenedUrl = pkRes.rows[0];
 
                   return res.send({
@@ -69,10 +75,11 @@ router.post("/urlShorten", (req, res) => {
                   });
                 } else {
                   // original URL does not exist -> error might be due to shortenedUrl -> collision
-                  var foundUnique = false;
-                  var maxLoops = 0; // only allow 5 loops to prevent infinite looping
 
-                  while (foundUnique && maxLoops < 5) {
+                  var foundUnique = false;
+                  var maxLoops = 0; // only allow 5 loops to prevent infinite looping -> if exceeded -> try again
+
+                  while (!foundUnique && maxLoops < 5) {
                     maxLoops++;
                     shortenedUrl = localUrl + "/" + nanoid(10); //generate new
 
@@ -103,11 +110,6 @@ router.post("/urlShorten", (req, res) => {
               }
             }
           );
-        } else {
-          return res.send({
-            originalUrl: originalUrl,
-            shortenedUrl: shortenedUrl,
-          });
         }
         client.end;
       }
@@ -131,7 +133,10 @@ router.get("/:key", (req, res) => {
         res.status(400).send({ error: err });
       } else {
         if (dbResult.rows.length == 0) {
-          res.status(400).send({ error: "URL is not valid: " + shortenedUrl });
+          res.status(400).send({
+            error: "Shortened URL not found: " + shortenedUrl,
+            message: "Go and regenerate another url!",
+          });
         } else {
           res.redirect(dbResult.rows[0].originalurl);
         }
@@ -142,6 +147,9 @@ router.get("/:key", (req, res) => {
   );
 });
 
+/**
+ * Delete given a key
+ */
 router.delete("/delete/:key", (req, res) => {
   shortenedUrlKey = req.params.key;
   shortenedUrl = localUrl + "/" + shortenedUrlKey;
