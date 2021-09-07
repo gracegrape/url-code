@@ -36,6 +36,21 @@
   width: 100%;
 }
 
+@media screen and (max-width: 500px) {
+  .urlShortenerForm,
+  .shortenedOutputForm {
+    /* min-width: 800px; */
+    /* max-width: 70%; */
+
+    width: 90%;
+  }
+  .introSpan {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 .urlShortenerInputField,
 .shortenedOutputField {
   width: 100%;
