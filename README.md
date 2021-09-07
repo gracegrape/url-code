@@ -1,5 +1,5 @@
 # url-code
-## To view the deployed Url Shortener, click here:
+## To view the deployed Url Shortener, click here
 [Url Shortener](https://url-shorten-ui.herokuapp.com/)
 
 ## Tech Stack
